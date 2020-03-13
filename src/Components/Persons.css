@@ -1,9 +1,21 @@
-.container .card{
-  margin: 20px;
+.container {
+  background-color: grey;
 }
 
-.container .card-header{
+.container .card{
+  margin: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, [col] 25% );
+  border: 1px solid gold
+}
+
+.card-header{
   padding: 0.5rem;
+  border: 1px solid black;
+  display: table;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 .container .card-body{
@@ -12,5 +24,13 @@
 }
 
 .container .card-text{
-  font-size: 13px;
+  font-size: 15px;
+  list-style-type: none;
+  margin: .5rem;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
