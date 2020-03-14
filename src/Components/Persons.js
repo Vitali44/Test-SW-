@@ -8,19 +8,19 @@ export default class Persons extends Component{
 
     this.state = {
       cast: [],
+      next: undefined,
+      prev: undefined,
     }
   }
 
   componentDidMount(){
     this.getAllPersonInfo();
-    // this.getPersonalInfo();
   }
   
   getAllPersonInfo = (url) => {
     fetch(url || 'https://swapi.co/api/people')
       .then(response => response.json())
       .then(response => {
-        console.log('response', response);
         this.setState({
           next: response.next,
           prev: response.previous,
@@ -35,51 +35,62 @@ export default class Persons extends Component{
     .then(response => this.setState({cast: response.results}))
   }
 
-  moveForward = () => {
-    this.setState((prevState) => ({
-      page: prevState.page + 1,
-    }), () => {
-      this.getAllPersonInfo(this.state.page);
-    })
+  moveForward = () => this.getAllPersonInfo(this.state.next)
+
+  moveBack = () => this.getAllPersonInfo(this.state.prev)
+
+  nothingSpecial = () => {
+    console.log('Booooooooooooooooooooooooo')
   }
 
   render() {
   
     return(
-      <ul className='list-group list-group-flush'>
-        {this.state.cast.map((pers, index) => {
-          return (
-            <div className="card text-white bg-dark rounded">
-              <div className="photo">
-                <img className="card-img-top" src="https://starwars-visualguide.com/assets/img/characters/1.jpg"/>
+      <Fragment>
+              <>
+        <ul className='list-group list-group-flush'>
+          {this.state.cast.map((pers, index) => {
+            return (
+              <div className="card text-white bg-dark rounded">
+                <div className="photo">
+                  <img className="card-img-top" src="https://starwars-visualguide.com/assets/img/characters/1.jpg"/>
+                </div>
+                <div>
+                <div className='card-header'>{pers.name}</div>
+                  <ul className="card-body">
+                    <li className="card-text">
+                      <span className="term">Birth Year: </span>
+                      <span>{pers.birth_year}</span>
+                    </li>                
+                    <li className="card-text">
+                      <span className="term">Gender: </span>
+                      <span>{pers.gender}</span>
+                    </li>
+                    <li className="card-text">
+                      <span className="term">Height: </span>
+                      <span>{pers.height}</span>
+                    </li>
+                    <li className="card-text">
+                      <span className="term">Weigth: </span>
+                      <span>{pers.mass}</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
-              <div>
-              <div className='card-header'>{pers.name}</div>
-              <Fragment>
-                <ul className="card-body">
-                  <li className="card-text">
-                    <span className="term">Birth Year: </span>
-                    <span>{pers.birth_year}</span>
-                  </li>                
-                  <li className="card-text">
-                    <span className="term">Gender: </span>
-                    <span>{pers.gender}</span>
-                  </li>
-                  <li className="card-text">
-                    <span className="term">Height: </span>
-                    <span>{pers.height}</span>
-                  </li>
-                  <li className="card-text">
-                    <span className="term">Weigth: </span>
-                    <span>{pers.mass}</span>
-                  </li>
-                </ul>
-              </Fragment>
-              </div>
-            </div>
-          )
-        })}
-      </ul>
+            )
+          })}
+        </ul>
+      </>
+      <div className="button btn-lg text-center">
+        <button type="button"
+                className="btn btn-primary btn-lg"
+                onClick={this.moveBack}>Prev</button>
+        <button type="button"
+                className="btn btn-primary btn-lg"
+                onClick={this.moveForward}>Next</button>
+      </div>
+
+      </Fragment>
     )
   };
 };
