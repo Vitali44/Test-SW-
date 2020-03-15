@@ -32,11 +32,11 @@ export default class Persons extends Component{
       })
   }
 
-  getPersonalInfo = (id) => {
-    fetch(`https://swapi.co/api/people/${id}/`)
-    .then(response => response.json())
-    .then(response => this.setState({cast: response.results}))
-  }
+  // getPersonalInfo = (id) => {
+  //   fetch(`https://swapi.co/api/people/${id}/`)
+  //   .then(response => response.json())
+  //   .then(response => this.setState({cast: response.results}))
+  // }
 
   moveForward = () => this.getAllPersonInfo(this.state.next)
 
@@ -58,7 +58,7 @@ export default class Persons extends Component{
               return (
                 <div className="card text-white bg-dark rounded">
                   <div className="photo">
-                    <img className="card-img-top" src="https://starwars-visualguide.com/assets/img/characters/1.jpg"/>
+                    <img className="card-img-top" src="https://starwars-visualguide.com/assets/img/characters/1.jpg"/> //Need add change logic
                   </div>
                   <div>
                   <div className='card-header'>{pers.name}</div>
