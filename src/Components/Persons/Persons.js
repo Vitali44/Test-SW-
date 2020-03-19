@@ -26,7 +26,7 @@ export default class Persons extends Component{
       .then(response => response.json())
       .then(response => {
         this.setState({
-          id: this.takeID(response),
+          id: id,
           next: response.next,
           prev: response.previous,
           cast: response.results,
@@ -39,18 +39,9 @@ export default class Persons extends Component{
 
   moveBack = () => this.getAllPersonInfo(this.state.prev)
 
-  takeID = (person) => {
-    const idReg = /\/([0-9]*)\/$/
-    const idPers = person.url.match(idReg)[1]
-    console.log(idPers)
-    return {
-      idPers
-    }
-  };
-
   render() {
 
-    const { loading, id } = this.state;
+    const { loading } = this.state;
 
     if(loading) {
       return <Spinner/>
@@ -64,7 +55,7 @@ export default class Persons extends Component{
               return (
                 <div className="card text-white bg-dark rounded">
                   <div className="photo">
-                    <img className="card-img-top" src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}/>
+                    <img className="card-img-top" src={`https://starwars-visualguide.com/assets/img/characters/${pers.url.match(/\/([0-9]*)\/$/)[1]}.jpg`}/>
                   </div>
                   <div>
                   <div className='card-header'>{pers.name}</div>
@@ -85,14 +76,7 @@ export default class Persons extends Component{
                         <span className="term">Weigth: </span>
                         <span>{pers.mass}</span>
                       </li>                      
-                      <li className="card-text">
-                        <span className="term">Weigth: </span>
-                        <span>{pers.url}</span>
-                      </li>
                     </ul>
-                    <button type='button'
-                            className="btn btn-primary"
-                            onClick={this.getPersonalInfo}>TEST</button>
                   </div>
                 </div>
               )
